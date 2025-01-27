@@ -1,0 +1,20 @@
+name: happypose
+channels:
+   - conda-forge
+   - pytorch
+   - nvidia
+   - anaconda
+   - defaults
+dependencies:
+  - pytorch-cuda==12.4
+  - pip
+  - pytorch
+  - torchvision
+  - geckodriver
+  - firefox
+  - opencv
+  - pinocchio
+  - torchtnt
+  - pip:
+    - torchnet
+    - numpy<2

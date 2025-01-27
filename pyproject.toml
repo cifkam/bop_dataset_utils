@@ -1,0 +1,120 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools"]
+
+[dependency-groups]
+dev = [
+  "coverage[toml]>=7.6.4",
+  "pre-commit>=4.0.1",
+  "ruff>=0.2.1"
+]
+docs = [
+  "myst-parser>=4.0.0",
+  "sphinx>=8.1.3"
+]
+
+[project]
+authors = [
+  {name = "Elliot Maître"},
+  {name = "Yann Labbé"}
+]
+classifiers = ["License :: OSI Approved :: BSD License"]
+dependencies = [
+  "beautifulsoup4",
+  "httpx",
+  "imageio",
+  "ipython",
+  "joblib",
+  "roma",
+  "tqdm",
+  "transforms3d",
+  "trimesh",
+  "webdataset",
+  "numpy",
+  "pandas",
+  "pin",
+  "pillow",
+  "psutil",
+  "pyaml",
+  "opencv-python",
+  "torch",
+  "torchvision",
+  "roma"
+]
+description = "Toolbox and trackers for object pose-estimation"
+maintainers = [
+  {email = "guilhem.saurel@laas.fr", name = "Guilhem Saurel"}
+]
+name = "bop_dataset_utils"
+readme = "README.md"
+requires-python = ">=3.10"
+version = "0.1.0"
+
+[project.optional-dependencies]
+cpu = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1"
+]
+cu124 = [
+  "torch>=2.5.1",
+  "torchvision>=0.20.1"
+]
+evaluation = ["cmeel-teaser-plusplus>=2.0"]
+pypi = [
+  "opencv-contrib-python>=4.10.0",
+  "opencv-python>=4.10.0",
+  "pin>=2.7"
+]
+
+
+[tool.coverage.run]
+omit = ["cosypose", "megapose6d"]
+
+[tool.mypy]
+exclude = ["cosypose", "megapose6d"]
+
+
+[tool.ruff]
+extend-exclude = ["*.ipynb", "deps"]
+target-version = "py310"
+
+[tool.ruff.lint]
+extend-ignore = ["D203", "D213"]
+extend-select = ["I", "RUF", "W"]
+
+[tool.setuptools]
+packages = ["bop_dataset_utils"]
+
+[tool.tomlsort]
+all = true
+
+[tool.uv]
+conflicts = [
+  [
+    {extra = "cpu"},
+    {extra = "cu124"}
+  ]
+]
+
+[[tool.uv.index]]
+explicit = true
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+
+[[tool.uv.index]]
+explicit = true
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+
+[tool.uv.sources]
+bop-toolkit-lib = {git = "https://github.com/agimus-project/bop_toolkit"}
+cosypose = {workspace = true}
+torch = [
+  {extra = "cpu", index = "pytorch-cpu", marker = "platform_system != 'Darwin'"},
+  {extra = "cu124", index = "pytorch-cu124"}
+]
+torchvision = [
+  {extra = "cpu", index = "pytorch-cpu", marker = "platform_system != 'Darwin'"},
+  {extra = "cu124", index = "pytorch-cu124"}
+]
+
