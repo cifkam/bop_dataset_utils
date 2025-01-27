@@ -20,8 +20,8 @@ from typing import List
 
 
 # Local Folder
-from bop_dataset_utils.toolbox.utils.memory import MEMORY
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject, RigidObjectDataset
+from bop_dataset_utils.utils.memory import MEMORY
+from bop_dataset_utils.datasets.object_dataset import RigidObject, RigidObjectDataset
 
 
 @MEMORY.cache

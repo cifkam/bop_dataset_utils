@@ -19,7 +19,7 @@ import torch
 from torch.utils.data import Sampler
 
 # MegaPose
-from bop_dataset_utils.toolbox.utils.random import temp_numpy_seed
+from bop_dataset_utils.utils.random import temp_numpy_seed
 
 
 class PartialSampler(Sampler):

@@ -19,7 +19,7 @@ import pickle
 from pathlib import Path
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.utils import SceneData
+from bop_dataset_utils.datasets.utils import SceneData
 
 
 class PickleDataset:

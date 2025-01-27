@@ -30,16 +30,16 @@ from tqdm import tqdm
 from bop_dataset_utils._bop_toolkit_lib import inout
 
 # Local Folder
-from bop_dataset_utils.toolbox.utils.memory import MEMORY
-from bop_dataset_utils.toolbox.datasets.scene_dataset import (
+from bop_dataset_utils.utils.memory import MEMORY
+from bop_dataset_utils.datasets.scene_dataset import (
     CameraData,
     ObjectData,
     ObservationInfos,
     SceneDataset,
     SceneObservation,
 )
-from bop_dataset_utils.toolbox.lib3d.transform import Transform
-from bop_dataset_utils.toolbox.utils.logging import get_logger
+from bop_dataset_utils.lib3d.transform import Transform
+from bop_dataset_utils.utils.logging import get_logger
 
 logger = get_logger(__name__)
 

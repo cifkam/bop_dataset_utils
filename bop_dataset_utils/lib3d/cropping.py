@@ -18,7 +18,7 @@ import torch
 import torchvision
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.pose_dataset import PoseDataset
+from bop_dataset_utils.datasets.pose_dataset import PoseDataset
 
 # Local Folder
 from .camera_geometry import boxes_from_uv, project_points, project_points_robust

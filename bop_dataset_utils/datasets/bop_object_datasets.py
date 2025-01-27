@@ -21,10 +21,10 @@ from pathlib import Path
 import numpy as np
 
 # Local Folder
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject, RigidObjectDataset
+from bop_dataset_utils.datasets.object_dataset import RigidObject, RigidObjectDataset
 
 # MegaPose
-from bop_dataset_utils.toolbox.lib3d.symmetries import ContinuousSymmetry, DiscreteSymmetry
+from bop_dataset_utils.lib3d.symmetries import ContinuousSymmetry, DiscreteSymmetry
 
 
 class BOPObjectDataset(RigidObjectDataset):

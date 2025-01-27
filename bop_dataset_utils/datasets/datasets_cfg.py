@@ -31,19 +31,19 @@ from bop_dataset_utils._cfg import (
     WDS_DS_DIR,
     YCBV_OBJECT_NAMES,
 )
-from bop_dataset_utils.toolbox.datasets.bop_object_datasets import BOPObjectDataset
-from bop_dataset_utils.toolbox.datasets.bop_scene_dataset import BOPDataset, remap_bop_targets
-from bop_dataset_utils.toolbox.datasets.deepim_modelnet import DeepImModelNetDataset
-from bop_dataset_utils.toolbox.datasets.gso_dataset import GoogleScannedObjectDataset
-from bop_dataset_utils.toolbox.datasets.modelnet_object_dataset import ModelNetObjectDataset
+from bop_dataset_utils.datasets.bop_object_datasets import BOPObjectDataset
+from bop_dataset_utils.datasets.bop_scene_dataset import BOPDataset, remap_bop_targets
+from bop_dataset_utils.datasets.deepim_modelnet import DeepImModelNetDataset
+from bop_dataset_utils.datasets.gso_dataset import GoogleScannedObjectDataset
+from bop_dataset_utils.datasets.modelnet_object_dataset import ModelNetObjectDataset
 
 # HappyPose
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObjectDataset
-from bop_dataset_utils.toolbox.datasets.scene_dataset import SceneDataset
-from bop_dataset_utils.toolbox.datasets.shapenet_object_dataset import ShapeNetObjectDataset
-from bop_dataset_utils.toolbox.datasets.urdf_dataset import UrdfDataset
-from bop_dataset_utils.toolbox.datasets.web_scene_dataset import WebSceneDataset
-from bop_dataset_utils.toolbox.utils.logging import get_logger
+from bop_dataset_utils.datasets.object_dataset import RigidObjectDataset
+from bop_dataset_utils.datasets.scene_dataset import SceneDataset
+from bop_dataset_utils.datasets.shapenet_object_dataset import ShapeNetObjectDataset
+from bop_dataset_utils.datasets.urdf_dataset import UrdfDataset
+from bop_dataset_utils.datasets.web_scene_dataset import WebSceneDataset
+from bop_dataset_utils.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
@@ -227,7 +227,7 @@ def make_scene_dataset(
 
     # Synthetic datasets
     elif "synthetic." in ds_name:
-        from bop_dataset_utils.toolbox.datasets.synthetic_dataset import SyntheticSceneDataset
+        from bop_dataset_utils.datasets.synthetic_dataset import SyntheticSceneDataset
 
         assert ".train" in ds_name or ".val" in ds_name
         is_train = "train" in ds_name.split(".")[-1]

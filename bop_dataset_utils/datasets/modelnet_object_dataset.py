@@ -17,7 +17,7 @@ limitations under the License.
 from pathlib import Path
 
 # Local Folder
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject, RigidObjectDataset
+from bop_dataset_utils.datasets.object_dataset import RigidObject, RigidObjectDataset
 
 
 class ModelNetObjectDataset(RigidObjectDataset):

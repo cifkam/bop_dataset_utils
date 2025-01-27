@@ -17,7 +17,7 @@ limitations under the License.
 import torch
 
 # Happypose
-from bop_dataset_utils.toolbox.lib3d.transform_ops import transform_pts
+from bop_dataset_utils.lib3d.transform_ops import transform_pts
 
 
 def dists_add(TXO_pred, TXO_gt, points):

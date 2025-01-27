@@ -18,8 +18,8 @@ limitations under the License.
 from typing import List, Tuple
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.scene_dataset import CameraData, ObjectData
-from bop_dataset_utils.toolbox.renderer.types import Panda3dCameraData, Panda3dObjectData
+from bop_dataset_utils.datasets.scene_dataset import CameraData, ObjectData
+from bop_dataset_utils.renderer.types import Panda3dCameraData, Panda3dObjectData
 
 
 def convert_scene_observation_to_panda3d(

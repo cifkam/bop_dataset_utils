@@ -22,7 +22,7 @@ from typing import List, Optional, Set, Tuple
 import numpy as np
 
 # MegaPose
-from bop_dataset_utils.toolbox.lib3d.symmetries import (
+from bop_dataset_utils.lib3d.symmetries import (
     ContinuousSymmetry,
     DiscreteSymmetry,
     make_symmetries_poses,

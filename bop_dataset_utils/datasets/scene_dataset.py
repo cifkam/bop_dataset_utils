@@ -32,11 +32,11 @@ import torch
 import webdataset as wds
 
 # MegaPose
-import bop_dataset_utils.toolbox.utils.tensor_collection as tc
-from bop_dataset_utils.toolbox.lib3d.transform import Transform
-from bop_dataset_utils.toolbox.utils.random import make_seed
-from bop_dataset_utils.toolbox.utils.tensor_collection import PandasTensorCollection
-from bop_dataset_utils.toolbox.utils.types import Resolution
+import bop_dataset_utils.utils.tensor_collection as tc
+from bop_dataset_utils.lib3d.transform import Transform
+from bop_dataset_utils.utils.random import make_seed
+from bop_dataset_utils.utils.tensor_collection import PandasTensorCollection
+from bop_dataset_utils.utils.types import Resolution
 
 ListBbox = List[int]
 ListPose = List[List[float]]

@@ -23,7 +23,7 @@ import torch
 from PIL import Image
 
 # Local Folder
-from bop_dataset_utils.toolbox.datasets.scene_dataset import (
+from bop_dataset_utils.datasets.scene_dataset import (
     CameraData,
     ObjectData,
     ObservationInfos,
@@ -32,8 +32,8 @@ from bop_dataset_utils.toolbox.datasets.scene_dataset import (
 )
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.utils import make_detections_from_segmentation
-from bop_dataset_utils.toolbox.lib3d.transform import Transform
+from bop_dataset_utils.datasets.utils import make_detections_from_segmentation
+from bop_dataset_utils.lib3d.transform import Transform
 
 
 def parse_pose(pose_str: str) -> np.ndarray:

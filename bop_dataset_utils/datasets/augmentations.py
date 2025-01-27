@@ -29,11 +29,11 @@ from PIL import ImageEnhance, ImageFilter
 from torchvision.datasets import VOCSegmentation
 
 # HappyPose
-from bop_dataset_utils.toolbox.datasets.scene_dataset import Resolution, SceneObservation
+from bop_dataset_utils.datasets.scene_dataset import Resolution, SceneObservation
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.utils import make_detections_from_segmentation
-from bop_dataset_utils.toolbox.lib3d.camera_geometry import get_K_crop_resize
+from bop_dataset_utils.datasets.utils import make_detections_from_segmentation
+from bop_dataset_utils.lib3d.camera_geometry import get_K_crop_resize
 
 
 class SceneObservationTransform:

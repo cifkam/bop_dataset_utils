@@ -31,11 +31,11 @@ from bop_dataset_utils._bop_toolkit_lib.dataset import bop_webdataset
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from bop_dataset_utils.toolbox.datasets.bop_scene_dataset import data_from_bop_obs
+from bop_dataset_utils.datasets.bop_scene_dataset import data_from_bop_obs
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.samplers import ListSampler
-from bop_dataset_utils.toolbox.datasets.scene_dataset import (
+from bop_dataset_utils.datasets.samplers import ListSampler
+from bop_dataset_utils.datasets.scene_dataset import (
     CameraData,
     DataJsonType,
     IterableSceneDataset,
@@ -44,7 +44,7 @@ from bop_dataset_utils.toolbox.datasets.scene_dataset import (
     SceneDataset,
     SceneObservation,
 )
-from bop_dataset_utils.toolbox.utils.webdataset import tarfile_to_samples
+from bop_dataset_utils.utils.webdataset import tarfile_to_samples
 
 
 def simple_collate_fn(batch: Any) -> Any:

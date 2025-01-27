@@ -23,9 +23,9 @@ import torch
 import trimesh
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject
-from bop_dataset_utils.toolbox.lib3d.mesh_ops import get_meshes_bounding_boxes, sample_points
-from bop_dataset_utils.toolbox.utils.tensor_collection import TensorCollection
+from bop_dataset_utils.datasets.object_dataset import RigidObject
+from bop_dataset_utils.lib3d.mesh_ops import get_meshes_bounding_boxes, sample_points
+from bop_dataset_utils.utils.tensor_collection import TensorCollection
 
 
 def as_mesh(scene_or_mesh):

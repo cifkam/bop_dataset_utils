@@ -16,9 +16,7 @@ limitations under the License.
 # Standard Library
 from pathlib import Path
 
-# MegaPose
-from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject, RigidObjectDataset
-
+from bop_dataset_utils.datasets.object_dataset import RigidObject, RigidObjectDataset
 
 class UrdfDataset(RigidObjectDataset):
     def __init__(

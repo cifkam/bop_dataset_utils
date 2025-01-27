@@ -22,7 +22,7 @@ import pandas as pd
 import torch
 
 # MegaPose
-from bop_dataset_utils.toolbox.utils.distributed import get_rank, get_world_size
+from bop_dataset_utils.utils.distributed import get_rank, get_world_size
 
 
 def concatenate(datas):

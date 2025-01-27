@@ -23,7 +23,7 @@ import torch
 import transforms3d
 
 # Local Folder
-from bop_dataset_utils.toolbox.lib3d.rotations import compute_rotation_matrix_from_ortho6d
+from bop_dataset_utils.lib3d.rotations import compute_rotation_matrix_from_ortho6d
 
 
 def transform_pts_np(T: npt.NDArray, pts: npt.NDArray):

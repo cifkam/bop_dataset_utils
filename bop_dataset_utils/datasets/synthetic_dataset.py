@@ -9,14 +9,14 @@ import torch
 import torch.multiprocessing
 import yaml
 
-from bop_dataset_utils.toolbox.datasets.datasets_cfg import make_urdf_dataset
-from bop_dataset_utils.toolbox.datasets.scene_dataset import (
+from bop_dataset_utils.datasets.datasets_cfg import make_urdf_dataset
+from bop_dataset_utils.datasets.scene_dataset import (
     CameraData,
     ObjectData,
     ObservationInfos,
     SceneObservation,
 )
-from bop_dataset_utils.toolbox.lib3d.transform import Transform
+from bop_dataset_utils.lib3d.transform import Transform
 
 from .utils import make_detections_from_segmentation
 

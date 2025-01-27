@@ -22,8 +22,8 @@ import numpy as np
 import numpy.typing as npt
 
 # Local Folder
-from bop_dataset_utils.toolbox.lib3d.rotations import euler2quat
-from bop_dataset_utils.toolbox.lib3d.transform import Transform
+from bop_dataset_utils.lib3d.rotations import euler2quat
+from bop_dataset_utils.lib3d.transform import Transform
 
 
 @dataclass

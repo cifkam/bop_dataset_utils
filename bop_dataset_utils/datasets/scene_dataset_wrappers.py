@@ -20,7 +20,7 @@ import dataclasses
 import numpy as np
 
 # Local Folder
-from bop_dataset_utils.toolbox.datasets.scene_dataset import SceneDataset, SceneObservation
+from bop_dataset_utils.datasets.scene_dataset import SceneDataset, SceneObservation
 
 
 class SceneDatasetWrapper(SceneDataset):

@@ -25,7 +25,7 @@ import numpy as np
 import torch
 
 # MegaPose
-from bop_dataset_utils.toolbox.datasets.augmentations import (
+from bop_dataset_utils.datasets.augmentations import (
     CropResizeToAspectTransform,
     DepthBackgroundDropoutTransform,
     DepthBlurTransform,
@@ -42,19 +42,19 @@ from bop_dataset_utils.toolbox.datasets.augmentations import (
     PillowSharpness,
     VOCBackgroundAugmentation,
 )
-from bop_dataset_utils.toolbox.datasets.augmentations import (
+from bop_dataset_utils.datasets.augmentations import (
     SceneObservationAugmentation as SceneObsAug,
 )
 
 # HappyPose
-from bop_dataset_utils.toolbox.datasets.scene_dataset import (
+from bop_dataset_utils.datasets.scene_dataset import (
     IterableSceneDataset,
     ObjectData,
     SceneDataset,
     SceneObservation,
 )
-from bop_dataset_utils.toolbox.datasets.scene_dataset_wrappers import remove_invisible_objects
-from bop_dataset_utils.toolbox.utils.types import Resolution
+from bop_dataset_utils.datasets.scene_dataset_wrappers import remove_invisible_objects
+from bop_dataset_utils.utils.types import Resolution
 
 
 @dataclass
