@@ -18,10 +18,9 @@ import json
 from pathlib import Path
 from typing import List
 
-# MegaPose
-from bop_dataset_utils._pose_estimators.megapose.config import MEMORY
 
 # Local Folder
+from bop_dataset_utils.toolbox.utils.memory import MEMORY
 from bop_dataset_utils.toolbox.datasets.object_dataset import RigidObject, RigidObjectDataset
 
 

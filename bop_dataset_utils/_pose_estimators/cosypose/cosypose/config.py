@@ -36,16 +36,13 @@ RESULTS_DIR = LOCAL_DATA_DIR / "results"
 DEBUG_DATA_DIR = LOCAL_DATA_DIR / "debug_data"
 
 DEPS_DIR = PROJECT_DIR / "deps"
-CACHE_DIR = LOCAL_DATA_DIR / "joblib_cache"
 
-CACHE_DIR.mkdir(exist_ok=True)
 TEST_DATA_DIR.mkdir(exist_ok=True)
 DASK_LOGS_DIR.mkdir(exist_ok=True)
 SYNT_DS_DIR.mkdir(exist_ok=True)
 RESULTS_DIR.mkdir(exist_ok=True)
 DEBUG_DATA_DIR.mkdir(exist_ok=True)
 
-MEMORY = Memory(CACHE_DIR, verbose=2)
 
 
 if "CONDA_PREFIX" in os.environ:

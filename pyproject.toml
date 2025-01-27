@@ -83,7 +83,7 @@ extend-ignore = ["D203", "D213"]
 extend-select = ["I", "RUF", "W"]
 
 [tool.setuptools]
-packages = ["bop_dataset_utils"]
+packages = { find = { where = ["."] } }
 
 [tool.tomlsort]
 all = true

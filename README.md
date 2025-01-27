@@ -2,7 +2,7 @@ Subset of code from the [HappyPose](https://github.com/agimus-project/happypose)
 
 Example usage:
 ```
-from bop_dataset_utils.toolbox.datasets.bop_scene_dataset import BOPDataset
+from bop_dataset_utils import BOPDataset
 
 ds_name = 'ycbv'
 split = 'test'

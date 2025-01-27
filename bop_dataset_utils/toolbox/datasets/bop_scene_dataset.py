@@ -28,9 +28,9 @@ from tqdm import tqdm
 
 # MegaPose
 from bop_dataset_utils._bop_toolkit_lib import inout
-from bop_dataset_utils._pose_estimators.megapose.config import MEMORY
 
 # Local Folder
+from bop_dataset_utils.toolbox.utils.memory import MEMORY
 from bop_dataset_utils.toolbox.datasets.scene_dataset import (
     CameraData,
     ObjectData,

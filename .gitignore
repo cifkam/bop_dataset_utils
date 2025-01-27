@@ -16,3 +16,4 @@ experiments/outputs
 /book
 happypose/pose_estimators/cosypose/build/
 local_data
+/build
