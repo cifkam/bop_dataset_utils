@@ -13,10 +13,6 @@ import httpx
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from bop_dataset_utils._pose_estimators.cosypose.cosypose.config import (
-    BOP_DS_DIR,
-    LOCAL_DATA_DIR,
-)
 from bop_dataset_utils.toolbox.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -27,8 +23,6 @@ MIRRORS = {
     "bop": "https://bop.felk.cvut.cz/media/data/bop_datasets/",
 }
 
-DOWNLOAD_DIR = LOCAL_DATA_DIR / "downloads"
-DOWNLOAD_DIR.mkdir(exist_ok=True)
 BOP_DATASETS = {
     "ycbv": {
         "splits": ["train_real", "train_synt", "test_all"],
@@ -75,19 +69,25 @@ async def main():
     parser.add_argument("--detections", nargs="*")
     parser.add_argument("--mirror", default="")
     parser.add_argument("--pbr_training_images", action="store_true")
+    parser.add_argument("--LOCAL_DATA_DIR", type=Path, required=True)
 
     to_dl = []
     to_symlink = []
     to_unzip = []
 
     parser.add_argument("--debug", action="store_true")
+    
     args = parser.parse_args()
+    args.BOP_DS_DIR = args.LOCAL_DATA_DIR / "bop_datasets"
+    args.DOWNLOAD_DIR = args.LOCAL_DATA_DIR / "downloads"
+    args.DOWNLOAD_DIR.mkdir(exist_ok=True)
+
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
     if args.bop_dataset:
         for dataset in args.bop_dataset:
-            to_dl.append((f"{dataset}_base.zip", BOP_DS_DIR / dataset))
+            to_dl.append((f"{dataset}_base.zip", args.BOP_DS_DIR / dataset))
             download_pbr = args.pbr_training_images and BOP_DATASETS[dataset].get(
                 "has_pbr", True
             )
@@ -98,7 +98,7 @@ async def main():
                 to_dl.append(
                     (
                         f"{dataset}_{suffix}.zip",
-                        BOP_DS_DIR / dataset,
+                        args.BOP_DS_DIR / dataset,
                     )
                 )
 
@@ -109,33 +109,33 @@ async def main():
                 to_dl.append(
                     (
                         "cosypose/bop_datasets/tless/all_target_tless.json",
-                        BOP_DS_DIR / "tless",
+                        args.BOP_DS_DIR / "tless",
                     )
                 )
                 to_symlink.append(
-                    (BOP_DS_DIR / "tless/models_eval", BOP_DS_DIR / "tless/models")
+                    (args.BOP_DS_DIR / "tless/models_eval", args.BOP_DS_DIR / "tless/models")
                 )
             elif extra == "ycbv":
                 # Friendly names used with YCB-Video
                 to_dl += [
                     (
                         "cosypose/bop_datasets/ycbv/ycbv_friendly_names.txt",
-                        BOP_DS_DIR / "ycbv",
+                        args.BOP_DS_DIR / "ycbv",
                     ),
                     # Offsets between YCB-Video and BOP (extracted from BOP readme)
                     (
                         "cosypose/bop_datasets/ycbv/offsets.txt",
-                        BOP_DS_DIR / "ycbv",
+                        args.BOP_DS_DIR / "ycbv",
                     ),
                     # Evaluation models for YCB-Video (used by other works)
                     (
                         "cosypose/bop_datasets/ycbv/models_original",
-                        BOP_DS_DIR / "ycbv",
+                        args.BOP_DS_DIR / "ycbv",
                     ),
                     # Keyframe definition
                     (
                         "cosypose/bop_datasets/ycbv/keyframe.txt",
-                        BOP_DS_DIR / "ycbv",
+                        args.BOP_DS_DIR / "ycbv",
                     ),
                 ]
 
@@ -144,7 +144,7 @@ async def main():
             to_dl.append(
                 (
                     f"cosypose/urdfs/{model}",
-                    LOCAL_DATA_DIR / "urdfs",
+                    args.LOCAL_DATA_DIR / "urdfs",
                 )
             )
 
@@ -152,17 +152,17 @@ async def main():
         to_dl += [
             (
                 "cosypose/bop_datasets/ycbv/models_bop-compat",
-                BOP_DS_DIR / "ycbv",
+                args.BOP_DS_DIR / "ycbv",
             ),
             (
                 "cosypose/bop_datasets/ycbv/models_bop-compat_eval",
-                BOP_DS_DIR / "ycbv",
+                args.BOP_DS_DIR / "ycbv",
             ),
         ]
 
     if args.ycbv_tests:
-        to_dl.append(("ycbv-debug.zip", DOWNLOAD_DIR))
-        to_unzip.append((DOWNLOAD_DIR / "ycbv-debug.zip", LOCAL_DATA_DIR / "results"))
+        to_dl.append(("ycbv-debug.zip", args.DOWNLOAD_DIR))
+        to_unzip.append((args.DOWNLOAD_DIR / "ycbv-debug.zip", args.LOCAL_DATA_DIR / "results"))
 
     
 
@@ -171,22 +171,22 @@ async def main():
             to_dl.append(
                 (
                     f"cosypose/saved_detections/{detection}.pkl",
-                    LOCAL_DATA_DIR / "saved_detections",
+                    args.LOCAL_DATA_DIR / "saved_detections",
                 )
             )
 
 
     if args.texture_dataset:
-        to_dl.append(("cosypose/zip_files/textures.zip", DOWNLOAD_DIR))
+        to_dl.append(("cosypose/zip_files/textures.zip", args.DOWNLOAD_DIR))
         to_unzip.append(
-            (DOWNLOAD_DIR / "textures.zip", LOCAL_DATA_DIR / "texture_datasets")
+            (args.DOWNLOAD_DIR / "textures.zip", args.LOCAL_DATA_DIR / "texture_datasets")
         )
 
     if args.synt_dataset:
         for dataset in args.synt_dataset:
-            to_dl.append((f"cosypose/zip_files/{dataset}.zip", DOWNLOAD_DIR))
+            to_dl.append((f"cosypose/zip_files/{dataset}.zip", args.DOWNLOAD_DIR))
             to_unzip.append(
-                (DOWNLOAD_DIR / f"{dataset}.zip", LOCAL_DATA_DIR / "synt_datasets")
+                (args.DOWNLOAD_DIR / f"{dataset}.zip", args.LOCAL_DATA_DIR / "synt_datasets")
             )
 
     

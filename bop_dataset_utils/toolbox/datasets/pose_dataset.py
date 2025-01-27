@@ -25,7 +25,6 @@ import numpy as np
 import torch
 
 # MegaPose
-from bop_dataset_utils._pose_estimators.megapose.config import LOCAL_DATA_DIR
 from bop_dataset_utils.toolbox.datasets.augmentations import (
     CropResizeToAspectTransform,
     DepthBackgroundDropoutTransform,
@@ -117,6 +116,7 @@ class PoseDataset(torch.utils.data.IterableDataset):
         apply_rgb_augmentation: bool = True,
         apply_depth_augmentation: bool = False,
         apply_background_augmentation: bool = False,
+        background_augmentation_voc_root: Optional[str] = None,
         return_first_object: bool = False,
         keep_labels_set: Optional[Set[str]] = None,
         depth_augmentation_level: int = 1,
@@ -127,10 +127,14 @@ class PoseDataset(torch.utils.data.IterableDataset):
 
         self.background_augmentations = []
         if apply_background_augmentation:
+            if background_augmentation_voc_root is None:
+                print("Warning, background_augmentation_voc_root, not set, using LOCAL_DATA_DIR")
+                from bop_dataset_utils.cfg import LOCAL_DATA_DIR
+                background_augmentation_voc_root = LOCAL_DATA_DIR
             self.background_augmentations += [
                 (
                     SceneObsAug(
-                        VOCBackgroundAugmentation(LOCAL_DATA_DIR),
+                        VOCBackgroundAugmentation(background_augmentation_voc_root),
                         p=0.3,
                     )
                 ),

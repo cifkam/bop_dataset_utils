@@ -1,63 +1,18 @@
-"""Copyright (c) 2022 Inria & NVIDIA CORPORATION & AFFILIATES. All rights reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-"""
-
-# Standard Library
 import os
 import sys
 from pathlib import Path
-
-# Third Party
 import pandas as pd
-from joblib import Memory
+from bop_dataset_utils import cfg
+from .cfg import LOCAL_DATA_DIR
 
-# MegaPose
-import bop_dataset_utils
+assert LOCAL_DATA_DIR is not None, f"LOCAL_DATA_DIR is not set. Please set it with:\n`{cfg.set_LOCAL_DATA_DIR.__module__}.{cfg.set_LOCAL_DATA_DIR.__name__}(<path>)"
+assert isinstance(LOCAL_DATA_DIR, Path), f"LOCAL_DATA_DIR is not a Path object. Please set it with:\n`{cfg.set_LOCAL_DATA_DIR.__module__}.{cfg.set_LOCAL_DATA_DIR.__name__}(<path>)"
 
-PROJECT_ROOT = Path(bop_dataset_utils.__file__).parent.parent
-PROJECT_DIR = PROJECT_ROOT
-# user should set "HAPPYPOSE_DATA_DIR" env or create project dir "local_data"
-LOCAL_DATA_DIR = Path(
-    os.environ.get("HAPPYPOSE_DATA_DIR", Path(PROJECT_DIR) / "local_data"),
-)
-assert LOCAL_DATA_DIR.exists(), (
-    "Did you forget to set env variable 'HAPPYPOSE_DATA_DIR'?"
-)
+
+
 BOP_DS_DIR = LOCAL_DATA_DIR / "bop_datasets"
-NB_DATA_DIR = LOCAL_DATA_DIR / "notebook_data"
 SHAPENET_DIR = LOCAL_DATA_DIR / "shapenetcorev2"
 WDS_DS_DIR = LOCAL_DATA_DIR / "webdatasets"
-
-# BOP eval scripts names
-BOP_POSE_EVAL_SCRIPT_NAME = "eval_bop19_pose.py"
-BOP_DETECTION_EVAL_SCRIPT_NAME = "eval_bop22_coco.py"
-
-BLENDER_PBR_DS_DIR = LOCAL_DATA_DIR / "blender_pbr_datasets"
-CC_TEXTURE_FOLDER = str(LOCAL_DATA_DIR / "cctextures")
-
-if "BLENDERPROC_DIR" in os.environ:
-    BLENDERPROC_DIR = Path(os.environ.get("BLENDERPROC_DIR"))
-else:
-    BLENDERPROC_DIR = PROJECT_DIR.parent / "blenderproc"
-
-if "BLENDER_INSTALL_DIR" in os.environ:
-    BLENDER_INSTALL_DIR = Path(os.environ["BLENDER_INSTALL_DIR"])
-else:
-    BLENDER_VERSION = "blender-2.93.8-linux-x64"
-    BLENDER_INSTALL_DIR = LOCAL_DATA_DIR / BLENDER_VERSION
-    if not BLENDER_INSTALL_DIR.exists():
-        BLENDER_INSTALL_DIR = Path(os.environ["HOME"]) / BLENDER_VERSION
 
 PYTHON_BIN_PATH = (
     Path(os.environ["CONDA_PREFIX"]) / "bin/python"
@@ -84,12 +39,7 @@ assert LOCAL_DATA_DIR.exists()
 EXP_DIR.mkdir(exist_ok=True)
 RESULTS_DIR.mkdir(exist_ok=True)
 DEBUG_DATA_DIR.mkdir(exist_ok=True)
-NB_DATA_DIR.mkdir(exist_ok=True)
-BLENDER_PBR_DS_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
-
-MEMORY = Memory(CACHE_DIR, verbose=2)
-
 
 BOP_DS_NAMES_ROOT = [
     "lm",

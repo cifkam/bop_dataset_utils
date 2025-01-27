@@ -21,8 +21,7 @@ from typing import List, Optional, Tuple
 import numpy as np
 import pandas as pd
 
-# MegaPose
-from bop_dataset_utils._pose_estimators.megapose.config import (
+from bop_dataset_utils._cfg import (
     BOP_DS_DIR,
     BOP_PANDA3D_DS_DIR,
     GSO_DIR,
@@ -228,9 +227,7 @@ def make_scene_dataset(
 
     # Synthetic datasets
     elif "synthetic." in ds_name:
-        from bop_dataset_utils._pose_estimators.cosypose.cosypose.datasets.synthetic_dataset import (
-            SyntheticSceneDataset,
-        )
+        from bop_dataset_utils.toolbox.datasets.synthetic_dataset import SyntheticSceneDataset
 
         assert ".train" in ds_name or ".val" in ds_name
         is_train = "train" in ds_name.split(".")[-1]
