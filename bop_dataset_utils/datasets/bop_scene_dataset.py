@@ -211,6 +211,7 @@ class BOPDataset(SceneDataset):
         allow_cache: bool = False,
         per_view_annotations: bool = False,
         models_dir: str = "models",
+        sort_index=False,
     ):
         assert ds_dir.exists(), "Dataset does not exists."
         self.ds_dir = ds_dir
@@ -238,6 +239,8 @@ class BOPDataset(SceneDataset):
                 split,
                 make_per_view_annotations=per_view_annotations,
             )
+        if sort_index:
+            frame_index = frame_index.sort_values(['scene_id', 'view_id']).reset_index(drop=True)
         self.use_raw_object_id = use_raw_object_id
         self.label_format = label_format
 
