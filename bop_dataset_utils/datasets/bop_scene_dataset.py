@@ -192,6 +192,9 @@ class BOPDataset(SceneDataset):
         label_format (str): format of the object label, e.g. "ycbv-{label}"
         split (str): split of the dataset to use, e.g. "test",
         load_depth (bool): when loading an observation, load also the depth image
+        load_rgb (bool): when loading an observation, load the rgb image. If False,
+            the rgb pixels are not decoded (observation.rgb is None) which speeds up
+            loading when only annotations/depth/segmentation are needed.
         use_raw_object_id (bool): if True, object id is {label}, otherwise obj_{label} (e.g. "000021" vs "obj_000021")
         allow_cache (bool): _description_,
         per_view_annotations (bool): _description_,
@@ -207,6 +210,7 @@ class BOPDataset(SceneDataset):
         label_format: str,
         split: str = "train",
         load_depth: bool = False,
+        load_rgb: bool = True,
         use_raw_object_id: bool = False,
         allow_cache: bool = False,
         per_view_annotations: bool = False,
@@ -243,6 +247,7 @@ class BOPDataset(SceneDataset):
             frame_index = frame_index.sort_values(['scene_id', 'view_id']).reset_index(drop=True)
         self.use_raw_object_id = use_raw_object_id
         self.label_format = label_format
+        self.load_rgb = load_rgb
 
         super().__init__(
             frame_index=frame_index,
@@ -298,12 +303,18 @@ class BOPDataset(SceneDataset):
         if not rgb_path.exists():
             rgb_path = rgb_path.with_suffix(".tif")
 
-        rgb = np.array(Image.open(rgb_path))
-        if rgb.ndim == 2:
-            # NOTE: This is for ITODD's gray images
-            rgb = np.repeat(rgb[..., None], 3, axis=-1)
-        rgb = rgb[..., :3]
-        h, w = rgb.shape[:2]
+        if self.load_rgb:
+            rgb = np.array(Image.open(rgb_path))
+            if rgb.ndim == 2:
+                # NOTE: This is for ITODD's gray images
+                rgb = np.repeat(rgb[..., None], 3, axis=-1)
+            rgb = rgb[..., :3]
+            h, w = rgb.shape[:2]
+        else:
+            rgb = None
+            # PIL's open() reads only the header, not the pixel data.
+            with Image.open(rgb_path) as img:
+                w, h = img.size
 
         cam_annotation = this_cam_info
         if "cam_R_w2c" in cam_annotation:
@@ -315,7 +326,7 @@ class BOPDataset(SceneDataset):
         K = np.array(cam_annotation["cam_K"]).reshape(3, 3)
         TWC = TCW.inverse()
 
-        camera_data = CameraData(TWC=TWC, K=K, resolution=rgb.shape[:2])
+        camera_data = CameraData(TWC=TWC, K=K, resolution=(h, w))
 
         TWC = TCW.inverse()
 
