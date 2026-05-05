@@ -201,6 +201,8 @@ class SceneObservation:
     camera_data: Optional[CameraData] = None
     # dict mapping unique id to (h, w) np.bool_
     binary_masks: Optional[Dict[int, np.ndarray]] = None
+    # path to the rgb image on disk; populated even when rgb pixels are not loaded
+    rgb_path: Optional[str] = None
 
     def __iter__(self):
         masks = []

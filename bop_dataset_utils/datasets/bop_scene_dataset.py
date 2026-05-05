@@ -400,5 +400,6 @@ class BOPDataset(SceneDataset):
             camera_data=camera_data,
             infos=image_infos,
             object_datas=object_datas,
+            rgb_path=str(rgb_path),
         )
         return observation
