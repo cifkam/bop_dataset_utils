@@ -195,6 +195,11 @@ class BOPDataset(SceneDataset):
         load_rgb (bool): when loading an observation, load the rgb image. If False,
             the rgb pixels are not decoded (observation.rgb is None) which speeds up
             loading when only annotations/depth/segmentation are needed.
+        load_mask (bool): when loading an observation, load the modal (visible)
+            segmentation from the `mask_visib/` directory into `observation.segmentation`.
+        load_mask_amodal (bool): when loading an observation, load the amodal (full
+            silhouette) segmentation from the `mask/` directory into
+            `observation.segmentation_amodal`.
         use_raw_object_id (bool): if True, object id is {label}, otherwise obj_{label} (e.g. "000021" vs "obj_000021")
         allow_cache (bool): _description_,
         per_view_annotations (bool): _description_,
@@ -211,6 +216,8 @@ class BOPDataset(SceneDataset):
         split: str = "train",
         load_depth: bool = False,
         load_rgb: bool = True,
+        load_mask: bool = True,
+        load_mask_amodal: bool = False,
         use_raw_object_id: bool = False,
         allow_cache: bool = False,
         per_view_annotations: bool = False,
@@ -248,6 +255,8 @@ class BOPDataset(SceneDataset):
         self.use_raw_object_id = use_raw_object_id
         self.label_format = label_format
         self.load_rgb = load_rgb
+        self.load_mask = load_mask
+        self.load_mask_amodal = load_mask_amodal
 
         super().__init__(
             frame_index=frame_index,
@@ -332,6 +341,9 @@ class BOPDataset(SceneDataset):
 
         object_datas = []
         segmentation = np.zeros((h, w), dtype=np.uint32)
+        segmentation_amodal = (
+            np.zeros((h, w), dtype=np.uint32) if self.load_mask_amodal else None
+        )
         if this_gt_info is not None:
             annotation = this_gt
             n_objects = len(annotation)
@@ -374,17 +386,31 @@ class BOPDataset(SceneDataset):
                 )
                 object_datas.append(object_data)
 
-            mask_path = scene_dir / "mask_visib" / f"{view_id_str}_all.png"
-            if mask_path.exists():
-                segmentation = np.array(Image.open(mask_path), dtype=np.uint32)
-            else:
-                for n in range(n_objects):
-                    binary_mask_n = np.array(
-                        Image.open(
-                            scene_dir / "mask_visib" / f"{view_id_str}_{n:06d}.png",
-                        ),
-                    )
-                    segmentation[binary_mask_n == 255] = n + 1
+            if self.load_mask:
+                mask_path = scene_dir / "mask_visib" / f"{view_id_str}_all.png"
+                if mask_path.exists():
+                    segmentation = np.array(Image.open(mask_path), dtype=np.uint32)
+                else:
+                    for n in range(n_objects):
+                        binary_mask_n = np.array(
+                            Image.open(
+                                scene_dir / "mask_visib" / f"{view_id_str}_{n:06d}.png",
+                            ),
+                        )
+                        segmentation[binary_mask_n == 255] = n + 1
+
+            if self.load_mask_amodal:
+                mask_path = scene_dir / "mask" / f"{view_id_str}_all.png"
+                if mask_path.exists():
+                    segmentation_amodal = np.array(Image.open(mask_path), dtype=np.uint32)
+                else:
+                    for n in range(n_objects):
+                        binary_mask_n = np.array(
+                            Image.open(
+                                scene_dir / "mask" / f"{view_id_str}_{n:06d}.png",
+                            ),
+                        )
+                        segmentation_amodal[binary_mask_n == 255] = n + 1
 
         depth = None
         if self.load_depth:
@@ -397,6 +423,7 @@ class BOPDataset(SceneDataset):
             rgb=rgb,
             depth=depth,
             segmentation=segmentation,
+            segmentation_amodal=segmentation_amodal,
             camera_data=camera_data,
             infos=image_infos,
             object_datas=object_datas,

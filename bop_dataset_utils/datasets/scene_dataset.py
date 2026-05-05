@@ -203,6 +203,9 @@ class SceneObservation:
     binary_masks: Optional[Dict[int, np.ndarray]] = None
     # path to the rgb image on disk; populated even when rgb pixels are not loaded
     rgb_path: Optional[str] = None
+    # (h, w), np.uint32 amodal segmentation (full rendered object silhouette,
+    # ignoring occlusion), parallel to `segmentation` which is modal (visible only)
+    segmentation_amodal: Optional[np.ndarray] = None
 
     def __iter__(self):
         masks = []
